@@ -1,0 +1,2 @@
+input_path: "results/dataset_run_001.jsonl"
+output_csv: "results/metrics_basic.csv"

@@ -1,0 +1,8 @@
+run_id: "paraphrase_001"
+provider: "groq"
+model: "llama-3.3-70b-versatile"
+temperature: 0.7
+max_tokens: 256
+k: 3
+input_path: "data/base_prompts.jsonl"
+output_path: "data/paraphrases.jsonl"
