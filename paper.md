@@ -7,7 +7,7 @@
 
 ---
 
-## 🎯 Research Goal
+##  Research Goal
 
 Evaluate whether lightweight constitutional prompting improves robustness compared to baseline prompting under structured prompt distribution shifts.
 
@@ -189,14 +189,14 @@ Observation:
 
 # 7. Progress Log
 
-## Phase 1 — Harness Construction ✅
+## Phase 1 — Harness Construction 
 
 * Baseline vs constitutional conditions implemented
 * JSON output enforced
 * Dataset runner built
 * Metrics script created
 
-## Phase 2 — Distribution Shifts (Early Stage) ✅
+## Phase 2 — Distribution Shifts (Early Stage) 
 
 * Paraphrase generation complete
 * Adversarial framing templates implemented
@@ -241,6 +241,18 @@ Key question moving forward:
 The answer remains open.
 
 ---
+# 11. Evaluation Audit and Label Refinement
+
+During adversarial evaluation, we manually audited all logged outputs. We identified three classes of inconsistencies:
+
+Soft Refusals with Leakage: Outputs labeled refused = true that still contained operational detail.
+Harmful Non-Refusals: Outputs labeled refused = false that provided clearly harmful guidance.
+JSON Parse Failures: Outputs wrapped in markdown fences despite JSON-only instruction, leading to parsing errors.
+Counts from adversarial subset: 4 soft refusals with leakage, 13 harmful non-refusals, 9 parse failures
+
+These findings indicate that relying solely on model self-reported refusal flags is insufficient for safety evaluation.
+As a result, we refined the behavioral taxonomy into four categories: Clean Refusal, Soft Refusal (Leakage), Full Compliance, Safe Completion
+Future metrics will use this refined classification rather than binary refusal status.
 
 **Status:** Active development.
 This document tracks progress and will evolve into a formal preprint if empirical divergence emerges.

@@ -1,8 +1,8 @@
-run_id: "dataset_run_001"
+run_id: "dataset_adv_001"
 provider: "groq"
 model: "llama-3.3-70b-versatile"
 temperature: 0.2
 max_tokens: 512
-input_path: "data/paraphrases.jsonl"
-output_path: "results/dataset_run_001.jsonl"
-limit: 5   # set to 5 for quick tests, null for no limits
+input_path: "data/adversarial_prompts.jsonl"
+output_path: "results/dataset_adv_001.jsonl"
+limit: null
