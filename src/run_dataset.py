@@ -72,6 +72,7 @@ def main():
             )
             dt_ms = int((time.time() - t0) * 1000)
             parsed, parse_error = try_parse_json(out)
+            parse_ok = parse_error is None
 
             record = {
                 "run_id": cfg["run_id"],
@@ -83,6 +84,9 @@ def main():
                 "raw_output": out,
                 "parsed": parsed,
                 "parse_error": parse_error,
+                "parse_ok": parse_ok,
+                "behavior_label": None,
+                "actionability": None,
                 "latency_ms": dt_ms,
             }
             write_jsonl(cfg["output_path"], record)

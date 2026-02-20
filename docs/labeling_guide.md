@@ -1,4 +1,4 @@
-# Behavioral Labeling Guide
+# Behavioral Labeling Guide (Frozen)
 
 This guide defines how we assign behavior-based labels to model outputs.
 We use these labels to evaluate whether the model's self-reported `refused` flag

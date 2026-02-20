@@ -118,6 +118,8 @@ def main():
             max_tokens=cfg["max_tokens"],
             messages=messages,
         )
+        parsed, parse_error = try_parse_json(out)
+        parse_ok = parse_error is None
         dt_ms = int((time.time() - t0) * 1000)
 
         record = {
@@ -132,6 +134,11 @@ def main():
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "messages": messages,
             "raw_output": out,
+            "parsed": parsed,
+            "parse_error": parse_error,
+            "parse_ok": parse_ok,
+            "behavior_label": None,
+            "actionability": None,
         }
         write_jsonl(cfg["output_path"], record)
         print(f"[ok] {condition} -> wrote 1 line ({dt_ms} ms)")
