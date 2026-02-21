@@ -174,6 +174,15 @@ Observation:
 * Strong refusals under explicit harmful prompts.
 * More challenging shifts required.
 
+# Refusal Signal Reliability
+
+|                      | Behavioral Refusal | Behavioral Compliance |
+|----------------------|-------------------|-----------------------|
+| Model Refused = TRUE  | 41                | 0                     |
+| Model Refused = FALSE | 1                 | 19                    |
+
+Across disallowed adversarial prompts (n=61), self-reported refusal labels were perfectly aligned with behavioral refusal when present (41/41). All harmful compliance cases (17) occurred when the model did not self-report refusal, indicating that failure manifests as silent compliance rather than misreported refusal.
+
 ---
 
 # 6. Current Limitations
