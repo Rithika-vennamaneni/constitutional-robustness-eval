@@ -1,0 +1,8 @@
+run_id: "run_v2"
+provider: "groq"
+model: "llama-3.3-70b-versatile"
+temperature: 0.2
+max_tokens: 512
+input_path: "data/adversarial_prompts_v2.jsonl"
+output_path: "results/run_v2.jsonl"
+limit: null

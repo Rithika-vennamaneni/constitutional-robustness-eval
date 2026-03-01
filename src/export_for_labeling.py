@@ -7,7 +7,7 @@ from typing import Any
 
 
 RESULTS_GLOB = "results/**/*.jsonl"
-OUTPUT_CSV = "results/labeling/adversarial_to_label.csv"
+OUTPUT_CSV = "results/labeling/runv2.csv"
 DATA_GLOB = "data/*.jsonl"
 
 CSV_COLUMNS = [

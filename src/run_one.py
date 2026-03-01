@@ -63,15 +63,31 @@ def load_dotenv_file(path: str = ".env") -> None:
             # Keep already-exported env vars as source of truth.
             os.environ.setdefault(key, value)
 
-def call_groq(client: Groq, model: str, temperature: float, max_tokens: int, messages: list[dict]) -> str:
-    # Groq SDK call pattern from their docs.
-    resp = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    return resp.choices[0].message.content
+def call_groq(
+    client: Groq, model: str, temperature: float, max_tokens: int, messages: list[dict]
+) -> str | None:
+    # Groq SDK call pattern from their docs, with retries.
+    retry_delays = [2, 4, 8]
+    for attempt in range(len(retry_delays) + 1):
+        try:
+            resp = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+            return resp.choices[0].message.content
+        except Exception as e:
+            if attempt < len(retry_delays):
+                delay = retry_delays[attempt]
+                print(
+                    f"[warn] Groq API call failed (attempt {attempt + 1}/{len(retry_delays) + 1}): "
+                    f"{type(e).__name__}: {e}. Retrying in {delay}s."
+                )
+                time.sleep(delay)
+            else:
+                print(f"[error] Groq API call failed after retries: {type(e).__name__}: {e}")
+    return None
 
 def write_jsonl(path: str, obj: dict) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -105,8 +121,7 @@ def main():
 
     for condition, system_prompt in conditions:
         messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "system", "content": JSON_INSTRUCTIONS},
+            {"role": "system", "content": system_prompt + "\n\n" + JSON_INSTRUCTIONS},
             {"role": "user", "content": TEST_PROMPT},
         ]
 
