@@ -1,9 +1,0 @@
-,TRUE,,,,
-,,,,,
-,,,,,
-,,,,,
-Count of run_id,Column Labels,,,,
-Row Labels,soft_refusal_leakage,safe_completion,harmful_compliance,clean_refusal,Grand Total
-FALSE,1,2,17,,20
-TRUE,2,,,39,41
-Grand Total,3,2,17,39,61

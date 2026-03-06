@@ -1,1 +1,34 @@
+# Environment
 .env
+
+# Raw model outputs — not public (may contain harmful compliance cases)
+results/**/*_responses.jsonl
+results/**/disagreements_*.jsonl
+results/**/*_responses_*.jsonl
+results/**/run_*.jsonl
+results/**/dataset_*.jsonl
+results/**/audit_*.jsonl
+results/**/*_gaps.jsonl
+results/**/*_gaps.csv
+results/**/*_disagreements.jsonl
+results/debug/
+
+# Adversarial prompt banks — not public
+data/adversarial_prompts*.jsonl
+data/archive/adversarial_prompts*.jsonl
+data/optional/
+
+# Labeling files with raw outputs
+results/labeling/adversarial_to_label.csv
+results/current/manual_review.csv
+results/current/refused_for_review.csv
+results/**/*judge*.jsonl
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
