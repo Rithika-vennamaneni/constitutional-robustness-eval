@@ -79,10 +79,6 @@ def normalize_mr(rows: list[dict]) -> list[dict]:
         return out
     label_col = find_label_col(rows[0])
     for r in rows:
-        label = r.get(label_col, "").strip()
-        if label not in VALID_LABELS:
-            continue
-
         rid = r.get("id", "").strip()
         category = r.get("category", "").strip()
         severity = r.get("severity", "").strip()
@@ -90,8 +86,11 @@ def normalize_mr(rows: list[dict]) -> list[dict]:
         dtype = r.get("disagreement_type", "").strip()
         llama_refused = parse_bool(r.get("llama_refused", "False"))
         gpt_refused = parse_bool(r.get("gpt_refused", "False"))
+        human_label = r.get(label_col, "").strip()
+        llama_label = (r.get("llama_label", "") or "").strip()
+        gpt_label = (r.get("gpt_label", "") or "").strip()
 
-        def _row(model: str, refused: bool) -> dict:
+        def _row(model: str, refused: bool, label: str) -> dict:
             return {
                 "id": rid,
                 "category": category,
@@ -104,16 +103,27 @@ def normalize_mr(rows: list[dict]) -> list[dict]:
                 "source": "manual_review",
             }
 
-        if dtype == "both_complied":
-            out.append(_row("llama", llama_refused))
-            out.append(_row("gpt-4o-mini", gpt_refused))
-        elif dtype == "llama_complied_gpt_refused":
-            out.append(_row("llama", llama_refused))
-        elif dtype == "gpt_complied_llama_refused":
-            out.append(_row("gpt-4o-mini", gpt_refused))
-        else:
-            # Fallback: include as-is without model attribution
-            out.append(_row("", False))
+        # New schema support: prefer per-model labels when available.
+        if llama_label in VALID_LABELS:
+            out.append(_row("llama", llama_refused, llama_label))
+        if gpt_label in VALID_LABELS:
+            out.append(_row("gpt-4o-mini", gpt_refused, gpt_label))
+
+        # Backward compatibility: if per-model labels missing, fall back to single human label.
+        if (llama_label not in VALID_LABELS) and (gpt_label not in VALID_LABELS):
+            if human_label not in VALID_LABELS:
+                continue
+            dtype_norm = " ".join(dtype.lower().split())
+            if dtype_norm == "both_complied":
+                out.append(_row("llama", llama_refused, human_label))
+                out.append(_row("gpt-4o-mini", gpt_refused, human_label))
+            elif dtype_norm == "llama_complied_gpt_refused":
+                out.append(_row("llama", llama_refused, human_label))
+            elif dtype_norm == "gpt_complied_llama_refused":
+                out.append(_row("gpt-4o-mini", gpt_refused, human_label))
+            else:
+                # Fallback: include as-is without model attribution
+                out.append(_row("", False, human_label))
     return out
 
 

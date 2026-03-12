@@ -4,23 +4,23 @@ Use this checklist before finalizing the paper draft in `docs/paper.md`.
 
 ## 1. Freeze Artifacts
 - [ ] Confirm these are the canonical result files for the paper:
-- [ ] `results/current/llama_baseline_responses.jsonl`
-- [ ] `results/current/llama_constitutional_responses.jsonl`
-- [ ] `results/current/gpt_baseline_responses.jsonl`
-- [ ] `results/current/gpt_constitutional_responses.jsonl`
-- [ ] `results/current/refused_for_review.csv`
-- [ ] `results/current/manual_review.csv`
-- [ ] `results/current/summary_analysis.csv`
-- [ ] `results/current/manual_review_summary.txt`
-- [ ] `results/current/disagreements_baseline.jsonl`
-- [ ] `results/current/disagreements_constitutional.jsonl`
-- [ ] `results/current/disagreements_llama_condition.jsonl`
+- [ y ] `results/current/llama_baseline_responses.jsonl`
+- [ y ] `results/current/llama_constitutional_responses.jsonl`
+- [ y ] `results/current/gpt_baseline_responses.jsonl`
+- [ y ] `results/current/gpt_constitutional_responses.jsonl`
+- [ y ] `results/current/refused_for_review.csv`
+- [ y ] `results/current/manual_review.csv`
+- [ y ] `results/current/summary_analysis.csv`
+- [ y ] `results/current/manual_review_summary.txt`
+- [ y ] `results/current/disagreements_baseline.jsonl`
+- [ y ] `results/current/disagreements_constitutional.jsonl`
+- [ y ] `results/current/disagreements_llama_condition.jsonl`
 - [ ] Confirm all old exploratory files remain in `results/archive/` and are not cited as final.
 
 ## 2. Data Integrity
 - [ ] Verify row counts for each stage are documented in Methods.
 - [ ] Verify that every reported denominator in `docs/paper.md` matches `results/current/summary_analysis.csv`.
-- [ ] Resolve or explicitly explain `condition=unknown` rows in `results/current/summary_analysis.csv`.
+- [ y ] Resolve or explicitly explain `condition=unknown` rows in `results/current/summary_analysis.csv`.
 - [ ] Resolve or explicitly explain `category=unknown` rows (even if zero-count placeholders).
 - [ ] Confirm no accidental duplicate rows by `(id, model, condition)` in analysis inputs.
 
